@@ -30,12 +30,15 @@ exports.findAll = (req, res) => {
 		if (err) {
 			res.status(500).send({ message: err.message || "Some error occurred while retrieving user." })
 		} else {
-			for (let item of data) {
-				item.created_at = moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')
-				item.updated_at = moment(item.updated_at).format('YYYY-MM-DD HH:mm:ss')
+			if(data && data.length){
+				for (let item of data) {
+					item.created_at = moment(item.created_at).format('YYYY-MM-DD HH:mm:ss')
+					item.updated_at = moment(item.updated_at).format('YYYY-MM-DD HH:mm:ss')
+				}
+				res.send(data)
+			}else{
+				res.send([])
 			}
-
-			res.send(data)
 		}
 	});
 };
